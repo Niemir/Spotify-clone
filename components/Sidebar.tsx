@@ -11,36 +11,16 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
-
-interface Playlist {
-  collaborative: boolean;
-  description: string;
-  href: string;
-  id: string;
-  images: { height: number; url: string; width: number }[];
-  name: string;
-  owner: { display_name: string; href: string; id: string; type: string };
-  primary_color: null;
-  public: boolean;
-  snapshot_id: string;
-  tracks: {
-    href: string;
-    total: number;
-  };
-  type: string;
-  uri: string;
-}
-interface PlaylistBody {
-  body: {
-    items: Playlist[];
-  };
-}
+import { playlistIdState } from "../atoms/playlistAtom";
+import { Playlist, PlaylistBody } from "../types/types";
 
 const Sidebar = () => {
   const spotifyApi = useSpotify();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -50,10 +30,10 @@ const Sidebar = () => {
       });
     }
   }, [session, spotifyApi]);
-  // console.log(session);
+  console.log(playlistId);
 
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide">
+    <div className="text-gray-500 p-5 text-xs lg:text-sm  border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide sm:w-[12rem] lg:w-[15rem] hidden md:inline-flex">
       <div className="space-y-4 ">
         <button
           className="flex items-center space-x-2 hover:text-white"
@@ -97,7 +77,11 @@ const Sidebar = () => {
         <hr className="border-t-[0.1px] border-gray-900" />
 
         {playlists.map(({ name, id }) => (
-          <p key={id} className="cursor-pointer hover:text-white">
+          <p
+            key={id}
+            onClick={() => setPlaylistId(id)}
+            className="cursor-pointer hover:text-white"
+          >
             {name}
           </p>
         ))}
