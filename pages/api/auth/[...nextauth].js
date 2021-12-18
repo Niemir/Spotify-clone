@@ -13,11 +13,11 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now + refreshedTokens.expires_in * 1000,
+      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
     };
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -39,7 +39,7 @@ export default NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    async jwt(token, account, user) {
+    async jwt({ token, user, account }) {
       // Initial sign in
       if (account && user) {
         return {
@@ -58,9 +58,9 @@ export default NextAuth({
 
       // Access token has expired, try to update it
       console.log("Access token has expired, refreshing");
-      return await refreshAccessToken(token);
+      return refreshAccessToken(token);
     },
-    async session(session, token) {
+    async session({ session, token }) {
       if (token) {
         session.user.accessToken = token.accessToken;
         session.user.refreshToken = token.refreshToken;
