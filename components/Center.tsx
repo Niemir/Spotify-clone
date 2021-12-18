@@ -4,7 +4,7 @@ import React from "react";
 const Center = () => {
   const { data: session } = useSession();
 
-  //   console.log(session?.user);
+  console.log(session);
   return (
     <div className="flex flex-grow text-white">
       <h1>center</h1>
