@@ -8,9 +8,11 @@ declare module "next-auth" {
     user: {
       /** The user's postal address. */
       address: string;
-      accessToken: string;
-      refreshToken: string;
+      accessToken: string | unknown;
+      refreshToken: string | unknown;
       username: string | unknown;
+      name: string;
+      image: string;
     };
   }
   interface JWT {
