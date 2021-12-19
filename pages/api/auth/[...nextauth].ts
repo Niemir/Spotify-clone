@@ -5,8 +5,8 @@ import spotifyApi, { LOGIN_URL } from "../../../lib/spotify";
 
 async function refreshAccessToken(token: JWT) {
   try {
-    spotifyApi.setAccessToken(token.accessToken);
-    spotifyApi.setRefreshToken(token.refreshToken);
+    spotifyApi.setAccessToken(token.accessToken as string);
+    spotifyApi.setRefreshToken(token.refreshToken as string);
     const { body: refreshedToken } = await spotifyApi.refreshAccessToken();
 
     console.log("REFRESHED TOKEN IS", refreshedToken);

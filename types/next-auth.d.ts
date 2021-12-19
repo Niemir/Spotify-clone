@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import NextApiRequest from "next";
 
 declare module "next-auth" {
   /**
@@ -15,10 +16,7 @@ declare module "next-auth" {
       image: string;
     };
   }
-  interface JWT {
-    accessToken: string;
-    username: string;
-  }
+
   /**
    * The shape of the user object returned in the OAuth providers' `profile` callback,
    * or the second parameter of the `session` callback, when using a database.
@@ -33,11 +31,10 @@ declare module "next-auth" {
   interface Profile {}
 }
 
-declare module "next-auth/jwt" {
-  // export interface JWT {
-  //   token: {
-  //     accessToken: string;
-  //     username: string;
-  //   };
-  // }
+declare module "next" {
+  interface NextApiRequest {
+    nextUrl: {
+      pathname: string;
+    };
+  }
 }

@@ -1,7 +1,8 @@
+import { NextApiRequest } from "next";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware(req: NextRequest) {
+export async function middleware(req: NextApiRequest) {
   try {
     const token = await getToken({ req, secret: process.env.JWT_SECRET });
 
