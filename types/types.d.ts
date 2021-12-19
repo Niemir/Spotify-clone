@@ -1,5 +1,24 @@
+interface Image {
+  height: number;
+  url: string;
+  width: number;
+}
 export interface TrackInfo {
-  album: any;
+  album: {
+    album_type: string;
+    artists: any[];
+    available_markets: string[];
+    external_urls: { spotify: string };
+    href: string;
+    id: string;
+    images: Image[];
+    name: string;
+    release_date: string;
+    release_date_precision: string;
+    total_tracks: number;
+    type: string;
+    uri: string;
+  };
   artists: {
     name: string;
     id: string;
@@ -39,7 +58,7 @@ export interface Playlist {
   description: string;
   href: string;
   id: string;
-  images: { height: number; url: string; width: number }[];
+  images: Image[];
   name: string;
   owner: { display_name: string; href: string; id: string; type: string };
   primary_color: null;
