@@ -8,7 +8,7 @@ export const Songs = () => {
 
   return (
     <div>
-      <ul>
+      <ul className="px-8 flex flex-col space-y-1 pb-28">
         {playlist?.tracks.items.map(({ track }, index) => (
           <Song key={track.id + index} order={index + 1} track={track} />
         ))}

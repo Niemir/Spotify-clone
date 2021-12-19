@@ -16,7 +16,7 @@ const useSpotify = () => {
         signIn();
       }
 
-      spotifyApi.setAccessToken(session.user.accessToken);
+      spotifyApi.setAccessToken(session.user.accessToken as string);
     }
   }, [session]);
 
