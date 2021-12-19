@@ -120,6 +120,8 @@ export const Player = () => {
           className="button"
         />
         <input
+          title="volume"
+          id="volume"
           className="w-14 md:w-28"
           value={volume}
           onChange={(e) => setVolume(Number(e.target.value))}

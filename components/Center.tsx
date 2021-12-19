@@ -32,9 +32,9 @@ const Center = () => {
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi
-        .getPlaylist(playlistId)
+        .getPlaylist(playlistId as string)
         .then((data) => {
-          setPlaylist(data.body);
+          setPlaylist(data.body as any);
         })
         .catch((error) => console.log(error));
     }
