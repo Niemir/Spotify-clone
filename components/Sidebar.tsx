@@ -18,6 +18,7 @@ import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { playlistIdState } from "../atoms/playlistAtom";
 import { Playlist, PlaylistBody } from "../types/types";
+import MenuLink from "./MenuLink";
 
 const Sidebar = () => {
   const spotifyApi = useSpotify();
@@ -55,40 +56,21 @@ const Sidebar = () => {
           mobileMenu ? "" : "hidden"
         } text-gray-500 pt-20 p-7 text-2xl w-full absolute z-10 bg-black  border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide    md:inline-flex pb-36 md:z-0  md:p-5 md:static md:w-[12rem] md:text-xs lg:text-sm lg:w-[15rem]`}
       >
-        <div className="space-y-4 ">
-          <button className="flex items-center space-x-2 hover:text-white">
-            <HomeIcon className="h-5 w-5" />
-            <p>Home</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:text-white">
-            <SearchIcon className="h-5 w-5" />
-            <p>Search</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:text-white">
-            <LibraryIcon className="h-5 w-5" />
-            <p>Your Library</p>
-          </button>
-          <hr className="border-t-[0.1px] border-gray-900" />
-
-          <button className="flex items-center space-x-2 hover:text-white">
-            <HeartIcon className="h-5 w-5" />
-            <p>Create Playlist</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:text-white">
-            <PlusCircleIcon className="h-5 w-5" />
-            <p>Liked Songs</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:text-white">
-            <RssIcon className="h-5 w-5" />
-            <p>Your episodes</p>
-          </button>
+        <div className="space-y-3 ">
+          <MenuLink path="/" icon={HomeIcon} label="Home" />
+          <MenuLink path="/search" icon={SearchIcon} label="Search" />
+          {/* <MenuLink path="/library" icon={LibraryIcon} label="Your Library" /> */}
+          {/* <hr className="border-t-[0.1px] border-gray-900" /> */}
+          {/* <MenuLink path="/playlist" icon={HeartIcon} label="Create Playlist" />
+          <MenuLink path="/liked-songs" icon={PlusCircleIcon} label="Liked Songs" />
+          <MenuLink path="/episodes" icon={RssIcon} label="Your episodes" /> */}
           <hr className="border-t-[0.1px] border-gray-900" />
 
           {playlists.map(({ name, id }) => (
             <p
               key={id}
               onClick={() => setPlaylistId(id)}
-              className="cursor-pointer hover:text-white"
+              className="cursor-pointer hover:text-white p-1"
             >
               {name}
             </p>
