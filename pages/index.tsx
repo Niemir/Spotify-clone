@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import Head from "next/head";
 import Center from "../components/Center";
 import Sidebar from "../components/Sidebar";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Player from "../components/Player";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { toastState } from "../atoms/toastAtom";
@@ -15,9 +15,13 @@ const Home: FC = () => {
       setTimeout(() => setToast(""), 5000);
     }
   }, [toast]);
+
   return (
-    // <div className="flex flex-col items-center justify-center min-h-screen py-2">
     <div className="bg-black h-screen overflow-hidden">
+      <Head>
+        <title>Spotify-Clone</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <main className="flex ">
         <Sidebar />
         <Center />

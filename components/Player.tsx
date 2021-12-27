@@ -152,7 +152,7 @@ export const Player = () => {
           <PlayIcon onClick={handlePlayPause} className="button big-button" />
         )}
         <FastForwardIcon
-          onClick={() => spotifyApi.skipToNext()}
+          onClick={() => spotifyApi.skipToNext().catch((e) => console.log(e))}
           className="button "
         />
         <div
