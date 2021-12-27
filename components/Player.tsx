@@ -13,22 +13,27 @@ import {
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { playlistState } from "../atoms/playlistAtom";
+import { playlistIdState, playlistState } from "../atoms/playlistAtom";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 import useSongInfo from "../hooks/useSongInfo";
 import useSpotify from "../hooks/useSpotify";
 import { Playlist } from "../types/types";
 import Song from "./Song";
 import { debounce } from "lodash";
+import { toastState } from "../atoms/toastAtom";
 
 export const Player = () => {
   const spotifyApi = useSpotify();
   const { data: session } = useSession();
 
+  const playlistId = useRecoilValue(playlistIdState);
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState<string>(currentTrackIdState);
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(isPlayingState);
+  const [error, setError] = useRecoilState(toastState);
   const [volume, setVolume] = useState(50);
+  const [shuffle, setShuffle] = useState(false);
+  const [repeat, setRepeat] = useState<"off" | "track" | "context">("off");
   // const debouncedVolume = useDebounce(volume);
   const songInfo = useSongInfo();
 
@@ -49,6 +54,7 @@ export const Player = () => {
       // fetch the song info
       fetchCurrentSong();
       setVolume(50);
+      spotifyApi.setShuffle(false).catch((e) => console.log(e));
     }
   }, [currentTrackId, spotifyApi, session]);
 
@@ -62,6 +68,41 @@ export const Player = () => {
         setIsPlaying(true);
       }
     });
+  };
+
+  const handleShuffle = () => {
+    spotifyApi
+      .setShuffle(!shuffle)
+      .then(() => setShuffle((prev) => !prev))
+      .catch(() => setError("Can't set shuffle on this song. Pick playlist."));
+  };
+  const handleRepeat = () => {
+    switch (repeat) {
+      case "off":
+        spotifyApi
+          .setRepeat("context")
+          .then(() => setRepeat("context"))
+          .catch(() =>
+            setError("Can't set repeat on this song. Pick playlist.")
+          );
+        break;
+      case "context":
+        spotifyApi
+          .setRepeat("track")
+          .then(() => setRepeat("track"))
+          .catch(() =>
+            setError("Can't set repeat on this song. Pick playlist.")
+          );
+        break;
+      case "track":
+        spotifyApi
+          .setRepeat("off")
+          .then(() => setRepeat("off"))
+          .catch(() =>
+            setError("Can't set repeat on this song. Pick playlist.")
+          );
+        break;
+    }
   };
 
   useEffect(() => {
@@ -78,7 +119,7 @@ export const Player = () => {
   const debouncedVolume = useCallback(
     debounce((volume) => {
       spotifyApi.setVolume(volume).catch((err) => console.log(err));
-    }, 250),
+    }, 100),
     []
   );
 
@@ -97,9 +138,12 @@ export const Player = () => {
       </div>
 
       <div className="flex items-center justify-evenly">
-        <SwitchHorizontalIcon className="button" />
+        <SwitchHorizontalIcon
+          className={`button ${shuffle ? "text-green-500" : ""}`}
+          onClick={handleShuffle}
+        />
         <RewindIcon
-          // onClick={() => spotifyApi.skipToPrevious()} the api is not working for now
+          onClick={() => spotifyApi.skipToPrevious()}
           className="button"
         />
         {isPlaying ? (
@@ -108,10 +152,23 @@ export const Player = () => {
           <PlayIcon onClick={handlePlayPause} className="button big-button" />
         )}
         <FastForwardIcon
-          // onClick={() => spotifyApi.skipToNext()} the api is not working for now
+          onClick={() => spotifyApi.skipToNext()}
           className="button "
         />
-        <ReplyIcon className="button" />
+        <div
+          className={`relative ${
+            repeat === "context"
+              ? "repeat-context"
+              : repeat === "track"
+              ? "repeat-track repeat-context"
+              : ""
+          }  `}
+        >
+          <ReplyIcon
+            className={`button ${repeat !== "off" ? "text-green-500" : ""}`}
+            onClick={handleRepeat}
+          />
+        </div>
       </div>
 
       <div className="flex items-center space-x-3 md:space-x-4 justify-end pr-5">

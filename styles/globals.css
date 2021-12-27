@@ -4,10 +4,16 @@
 
 @layer components {
     .button{
-        @apply h-5 w-5 cursor-pointer hover:scale-125 transition-transform ;
+        @apply relative h-5 w-5 cursor-pointer hover:scale-125 transition-transform ;
     }
     .big-button{
         
         @apply h-10 w-10 ;
+    }
+    .repeat-track{
+        @apply before:flex before:text-green-500 before:justify-center before:items-center before:align-middle before:content-['1'] before:text-[10px] before:leading-none before:text-center before:absolute before:top-[-10px] before:w-4 before:h-4  before:border-2 before:border-green-500 before:rounded-full before:right-[-15px]
+    }
+    .repeat-context{
+        @apply after:block after:absolute after:bottom-[-10px] after:w-1 after:h-1 after:bg-green-500 after:rounded after:left-[50%]
     }
 }
