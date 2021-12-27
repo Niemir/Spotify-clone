@@ -1,17 +1,15 @@
 import { ChevronDownIcon, LogoutIcon } from "@heroicons/react/outline";
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
-import { FC, useState } from "react";
-interface UserBarProps {
-  session: Session;
-}
 
-const UserBar: FC<UserBarProps> = ({ session }) => {
+import { signOut, useSession } from "next-auth/react";
+import { FC, useState } from "react";
+
+const UserBar = () => {
+  const { data: session } = useSession();
   const [menu, setMenu] = useState(false);
 
   return (
     <header
-      className="absolute top-5 right-8 z-50"
+      className="absolute top-5 right-8 z-50 text-white"
       onClick={() => setMenu((prev) => !prev)}
     >
       <div className="flex items-center bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2">
