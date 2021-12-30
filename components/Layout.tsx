@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
             <UserBar />
             {children}
           </main>
-          <div className="sticky bottom-0">
+          <div className="fixed w-full bottom-0">
             <Player />
           </div>
         </>

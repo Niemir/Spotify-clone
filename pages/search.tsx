@@ -51,7 +51,7 @@ const Search = () => {
   );
 
   return (
-    <div className=" pt-20 p-7 text-white w-full h-screen overflow-y-scroll  scrollbar-hide  lg:p-20 lg:pb-48">
+    <div className=" pt-20 p-7 pb-24 text-white w-full h-screen overflow-y-scroll  scrollbar-hide   lg:p-20 lg:pb-48">
       <h1 className="text-4xl lg:text-6xl">Search</h1>
       <form>
         <input
@@ -65,42 +65,40 @@ const Search = () => {
         />
       </form>
 
-      <div className="relative ">
-        <div className="relative mb-8">
-          <Title text="Songs" />
+      <div className="relative mb-8">
+        <Title text="Songs" />
 
-          {loading ? (
-            <Loader />
-          ) : (
-            songs.map((track, id) => (
-              <Song key={track.id + id} order={id} track={track} />
-            ))
-          )}
-        </div>
-        <div className="relative mb-8">
-          <Title text="Albums" />
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {albums.map((album, id) => (
-                <Album key={album.id + id} album={album} />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="relative mb-8">
-          <Title text="Artists" />
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {artists.map((artist, id) => (
-                <Artist key={artist.id + id} artist={artist} />
-              ))}
-            </div>
-          )}
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          songs.map((track, id) => (
+            <Song key={track.id + id} order={id} track={track} />
+          ))
+        )}
+      </div>
+      <div className="relative mb-8">
+        <Title text="Albums" />
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {albums.map((album, id) => (
+              <Album key={album.id + id} album={album} />
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="relative mb-8">
+        <Title text="Artists" />
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {artists.map((artist, id) => (
+              <Artist key={artist.id + id} artist={artist} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

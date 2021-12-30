@@ -6,7 +6,7 @@ interface AlbumProps {
 const Album: FC<AlbumProps> = ({ album }) => {
   return (
     <div className="text-gray-500 bg-gray-900 py-4 px-5 hover:bg-gray-800 transition-colors rounded-lg cursor-pointer">
-      <div className="relative pt-[100%] rounded-full overflow-hidden mb-4">
+      <div className="relative pt-[100%]  overflow-hidden mb-4">
         <img
           className="absolute top-0 left-0 w-full h-full object-cover"
           src={album.images[0].url}
