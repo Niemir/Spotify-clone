@@ -19,7 +19,7 @@ const Song: FC<SongProps> = ({ order, track }) => {
   const playSong = () => {
     setCurrentTrackId(id);
     setIsPlaying(true);
-
+    console.log(isPlaying);
     spotifyApi.play({
       uris: [uri],
     });
@@ -27,11 +27,13 @@ const Song: FC<SongProps> = ({ order, track }) => {
 
   return (
     <div
-      className="grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900 transition-colors rounded-lg cursor-pointer"
+      className={`grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900  transition-colors rounded-lg cursor-pointer ${
+        currentTrackId === track.id ? "bg-green-900" : ""
+      }`}
       onClick={playSong}
     >
       <div className="flex items-center space-x-4">
-        <p>{order}</p>
+        <p>{order + 1}</p>
         <img className="h-10 w-10" src={album.images[2].url} alt="" />
         <div>
           <p className="w-36 lg:w-64 text-white truncate">{name}</p>

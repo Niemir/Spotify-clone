@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   }
   useEffect(() => {
     if (!data) {
-      router.push("/login");
+      // router.push("/login");
     }
   }, [data]);
   useEffect(() => {
@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="bg-black h-screen overflow-hidden">
-      {data ? (
+      {true ? (
         <>
           <main className="flex ">
             <Sidebar />

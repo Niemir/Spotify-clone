@@ -108,11 +108,6 @@ export const Player = () => {
   useEffect(() => {
     if (volume > 0 && volume < 100) {
       debouncedVolume(volume);
-      spotifyApi
-        .search("Abba", ["track", "playlist"], { limit: 5, offset: 1 })
-        .then((data) => {
-          console.log(data);
-        });
     }
   }, [volume]);
 
