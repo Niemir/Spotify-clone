@@ -53,8 +53,10 @@ const Sidebar = () => {
       </div>
       <div
         className={`${
-          mobileMenu ? "" : "hidden"
-        } text-gray-500 pt-20 p-7 text-2xl w-full absolute z-10 bg-black  border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide    md:inline-flex pb-36 md:z-0  md:p-5 md:static md:w-[12rem] md:text-xs lg:text-sm lg:w-[15rem]`}
+          mobileMenu
+            ? "pointer-events-auto translate-x-0"
+            : "pointer-events-none translate-x-[-100%]"
+        } text-gray-500 pt-20 p-7 text-md w-[80%] absolute z-10 bg-black  border-r border-gray-900 transition-transform overflow-y-scroll h-screen scrollbar-hide    md:inline-flex pb-36 md:z-0 md:translate-x-0  md:p-5 md:static md:w-[12rem] md:text-xs lg:text-sm lg:w-[15rem]`}
       >
         <div className="space-y-3 ">
           <MenuLink path="/" icon={HomeIcon} label="Home" />

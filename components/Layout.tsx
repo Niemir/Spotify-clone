@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
           </div>
         </>
       ) : (
-        <div className="h-full flex items-center justify-center text-white text-6xl">
+        <div className="h-full flex items-center justify-center text-white p-3 text-xl lg:text-6xl">
           Redirecting to login page
         </div>
       )}
