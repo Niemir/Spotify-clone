@@ -9,7 +9,7 @@ const Artist: FC<ArtistProps> = ({ artist }) => {
       className="text-gray-500 bg-gray-900 py-4 px-5 hover:bg-gray-800 transition-colors rounded-lg cursor-pointer"
       // onClick={playSong}
     >
-      <div className="relative pt-[100%] rounded-full overflow-hidden mb-4">
+      <div className="relative pt-[100%] rounded-full overflow-hidden shadow-2xl shadow-black mb-4">
         <img
           className=" absolute top-0 left-0 w-full h-full object-cover"
           src={artist.images[0].url}
