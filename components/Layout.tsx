@@ -1,3 +1,5 @@
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { toastState } from "../atoms/toastAtom";
@@ -8,7 +10,15 @@ import UserBar from "./UserBar";
 
 const Layout = ({ children }) => {
   const [toast, setToast] = useRecoilState(toastState);
-
+  const router = useRouter();
+  const { data } = useSession();
+  if (!data) {
+  }
+  useEffect(() => {
+    if (!data) {
+      router.push("/login");
+    }
+  }, [data]);
   useEffect(() => {
     if (toast !== "") {
       setTimeout(() => setToast(""), 5000);
@@ -17,15 +27,24 @@ const Layout = ({ children }) => {
 
   return (
     <div className="bg-black h-screen overflow-hidden">
-      <main className="flex ">
-        <Sidebar />
-        <UserBar />
-        {/* <Center /> */}
-        {children}
-      </main>
-      <div className="sticky bottom-0">
-        <Player />
-      </div>
+      {data ? (
+        <>
+          <main className="flex ">
+            <Sidebar />
+            <UserBar />
+            {/* <Center /> */}
+            {children}
+          </main>
+          <div className="sticky bottom-0">
+            <Player />
+          </div>
+        </>
+      ) : (
+        <div className="h-full flex items-center justify-center text-white text-6xl">
+          Redirecting to login page
+        </div>
+      )}
+
       {toast && (
         <div className="fixed bottom-32 left-[50%] translate-x-[-50%] text-white animate-inout">
           <div
