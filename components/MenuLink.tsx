@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, SVGProps } from "react";
 
 interface LinkProps {
   path: string;
   label: string;
-  icon: any;
+  icon: (props?: SVGProps<SVGSVGElement>) => JSX.Element;
 }
 const MenuLink: FC<LinkProps> = ({ path, label, icon }) => {
   const router = useRouter();

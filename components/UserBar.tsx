@@ -1,7 +1,7 @@
 import { ChevronDownIcon, LogoutIcon } from "@heroicons/react/outline";
 
 import { signOut, useSession } from "next-auth/react";
-import { FC, useState } from "react";
+import { useState } from "react";
 
 const UserBar = () => {
   const { data: session } = useSession();

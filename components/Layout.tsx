@@ -9,21 +9,21 @@ import Sidebar from "./Sidebar";
 import UserBar from "./UserBar";
 
 const Layout = ({ children }) => {
-  const [toast, setToast] = useRecoilState(toastState);
+  const [toast, setToast] = useRecoilState<string>(toastState);
   const router = useRouter();
   const { data } = useSession();
-  if (!data) {
-  }
+
   useEffect(() => {
     if (!data) {
-      // router.push("/login");
+      router.push("/login");
     }
-  }, [data]);
+  }, [data, router]);
+
   useEffect(() => {
     if (toast !== "") {
       setTimeout(() => setToast(""), 5000);
     }
-  }, [toast]);
+  }, [toast, setToast]);
 
   return (
     <div className="bg-black h-screen overflow-hidden">
@@ -32,7 +32,6 @@ const Layout = ({ children }) => {
           <main className="flex ">
             <Sidebar />
             <UserBar />
-            {/* <Center /> */}
             {children}
           </main>
           <div className="sticky bottom-0">

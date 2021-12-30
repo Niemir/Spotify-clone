@@ -18,7 +18,6 @@ const Song: FC<SongProps> = ({ order, track }) => {
   const playSong = () => {
     setCurrentTrackId(id);
     setIsPlaying(true);
-    console.log(isPlaying);
     spotifyApi.play({
       uris: [uri],
     });

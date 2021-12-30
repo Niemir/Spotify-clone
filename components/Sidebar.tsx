@@ -26,7 +26,7 @@ const Sidebar = () => {
   const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectFull[]>(
     []
   );
-  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
+  const [playlistId, setPlaylistId] = useRecoilState<string>(playlistIdState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {

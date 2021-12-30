@@ -4,7 +4,6 @@ interface ArtistProps {
   artist: SpotifyApi.ArtistObjectFull;
 }
 const Artist: FC<ArtistProps> = ({ artist }) => {
-  console.log(artist);
   return (
     <div
       className="text-gray-500 bg-gray-900 py-4 px-5 hover:bg-gray-800 transition-colors rounded-lg cursor-pointer"

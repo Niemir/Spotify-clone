@@ -7,7 +7,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { playlistState, playlistIdState } from "../atoms/playlistAtom";
 import useSpotify from "../hooks/useSpotify";
 import Songs from "../components/Songs";
-import UserBar from "../components/UserBar";
 import Layout from "../components/Layout";
 
 const colors = [
@@ -23,8 +22,8 @@ const colors = [
 const Home = () => {
   const { data: session } = useSession();
   const spotifyApi = useSpotify();
-  const [color, setColor] = useState(null);
-  const playlistId = useRecoilValue(playlistIdState);
+  const [color, setColor] = useState("");
+  const playlistId = useRecoilValue<string>(playlistIdState);
   const [playlist, setPlaylist] =
     useRecoilState<SpotifyApi.PlaylistObjectFull>(playlistState);
 

@@ -12,12 +12,10 @@ import {
 } from "@heroicons/react/solid";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { playlistIdState, playlistState } from "../atoms/playlistAtom";
+import { useRecoilState } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 import useSongInfo from "../hooks/useSongInfo";
 import useSpotify from "../hooks/useSpotify";
-import Song from "./Song";
 import { debounce } from "lodash";
 import { toastState } from "../atoms/toastAtom";
 
@@ -25,20 +23,16 @@ export const Player = () => {
   const spotifyApi = useSpotify();
   const { data: session } = useSession();
 
-  const playlistId = useRecoilValue(playlistIdState);
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState<string>(currentTrackIdState);
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(isPlayingState);
-  const [error, setError] = useRecoilState(toastState);
+  const [error, setError] = useRecoilState<string>(toastState);
   const [volume, setVolume] = useState(50);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<"off" | "track" | "context">("off");
-  // const debouncedVolume = useDebounce(volume);
   const songInfo = useSongInfo();
-
   const fetchCurrentSong = () => {
     if (!songInfo) {
-      console.log("run");
       spotifyApi.getMyCurrentPlayingTrack().then((data) => {
         setCurrentTrackId(data.body?.item?.id);
 
@@ -50,7 +44,6 @@ export const Player = () => {
   };
   useEffect(() => {
     if (spotifyApi.getAccessToken() && !currentTrackId) {
-      // fetch the song info
       fetchCurrentSong();
       setVolume(50);
       spotifyApi.setShuffle(false).catch((e) => console.log(e));
