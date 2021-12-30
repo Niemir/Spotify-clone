@@ -17,14 +17,15 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { playlistIdState } from "../atoms/playlistAtom";
-import { Playlist, PlaylistBody } from "../types/types";
 import MenuLink from "./MenuLink";
 
 const Sidebar = () => {
   const spotifyApi = useSpotify();
   const [mobileMenu, setMobileMenu] = useState(false);
   const { data: session } = useSession();
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectFull[]>(
+    []
+  );
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   useEffect(() => {

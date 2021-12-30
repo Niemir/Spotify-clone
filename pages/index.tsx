@@ -6,7 +6,6 @@ import { shuffle } from "lodash";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { playlistState, playlistIdState } from "../atoms/playlistAtom";
 import useSpotify from "../hooks/useSpotify";
-import { Playlist } from "../types/types";
 import Songs from "../components/Songs";
 import UserBar from "../components/UserBar";
 import Layout from "../components/Layout";
@@ -26,7 +25,8 @@ const Home = () => {
   const spotifyApi = useSpotify();
   const [color, setColor] = useState(null);
   const playlistId = useRecoilValue(playlistIdState);
-  const [playlist, setPlaylist] = useRecoilState<Playlist>(playlistState);
+  const [playlist, setPlaylist] =
+    useRecoilState<SpotifyApi.PlaylistObjectFull>(playlistState);
 
   useEffect(() => {
     setColor(shuffle(colors).pop());

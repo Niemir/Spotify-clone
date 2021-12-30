@@ -1,12 +1,11 @@
 import { FC } from "react";
 import useSpotify from "../hooks/useSpotify";
-import { TrackInfo } from "../types/types";
 import { msToMinuts } from "../helpers/getTime";
 import { useRecoilState } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 interface SongProps {
   order: number;
-  track: TrackInfo;
+  track: SpotifyApi.TrackObjectFull;
 }
 const Song: FC<SongProps> = ({ order, track }) => {
   const spotifyApi = useSpotify();

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface AlbumProps {
-  album: SpotifyApi.AlbumObjectFull;
+  album: SpotifyApi.AlbumObjectSimplified;
 }
 const Album: FC<AlbumProps> = ({ album }) => {
   console.log(album);

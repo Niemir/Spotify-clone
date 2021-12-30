@@ -7,17 +7,21 @@ import Song from "../components/Song";
 import Artist from "../components/Artist";
 import Album from "../components/Album";
 import Title from "../components/Title";
+
+const Loader = () => (
+  <div className="absolute top-0 left-0 w-full h-24 bg-black opacity-50 flex pt-5 justify-center text-3xl py-5">
+    Loading...
+  </div>
+);
+
 const Search = () => {
   const [inputValue, setInputValue] = useState("");
   const spotifyApi = useSpotify();
   const { data: session } = useSession();
-  const [songs, setSongs] = useState([]);
-  const [albums, setAlbums] = useState([]);
-  const [artists, setArtists] = useState([]);
+  const [songs, setSongs] = useState<SpotifyApi.TrackObjectFull[]>([]);
+  const [albums, setAlbums] = useState<SpotifyApi.AlbumObjectSimplified[]>([]);
+  const [artists, setArtists] = useState<SpotifyApi.ArtistObjectFull[]>([]);
   const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-
-  // }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -32,11 +36,9 @@ const Search = () => {
   const debouncedValue = useCallback(
     debounce((value) => {
       setLoading(true);
-      // spotifyApi.setInputValue(volume).catch((err) => console.log(err));
       spotifyApi
         .search(value, ["track", "album", "artist"], { limit: 6, offset: 0 })
         .then(({ body }) => {
-          // console.log(data);
           setSongs(body.tracks.items);
           setArtists(body.artists.items);
           setAlbums(body.albums.items);
@@ -51,7 +53,7 @@ const Search = () => {
   return (
     <div className=" pt-20 p-7 text-white w-full h-screen overflow-y-scroll  scrollbar-hide  lg:p-20 lg:pb-48">
       <h1 className="text-4xl lg:text-6xl">Search</h1>
-      <form className="">
+      <form>
         <input
           type="text"
           name=""
@@ -68,9 +70,7 @@ const Search = () => {
           <Title text="Songs" />
 
           {loading ? (
-            <div className="absolute top-0 left-0 w-full h-24 bg-black opacity-50 flex pt-5 justify-center text-3xl py-5">
-              Loading...
-            </div>
+            <Loader />
           ) : (
             songs.map((track, id) => (
               <Song key={track.id + id} order={id} track={track} />
@@ -80,9 +80,7 @@ const Search = () => {
         <div className="relative mb-8">
           <Title text="Albums" />
           {loading ? (
-            <div className="absolute top-0 left-0 w-full h-24 bg-black opacity-50 flex pt-5 justify-center text-3xl py-5">
-              Loading...
-            </div>
+            <Loader />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {albums.map((album, id) => (
@@ -94,9 +92,7 @@ const Search = () => {
         <div className="relative mb-8">
           <Title text="Artists" />
           {loading ? (
-            <div className="absolute top-0 left-0 w-full h-24 bg-black opacity-50 flex pt-5 justify-center text-3xl py-5">
-              Loading...
-            </div>
+            <Loader />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {artists.map((artist, id) => (

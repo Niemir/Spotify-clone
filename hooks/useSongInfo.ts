@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
-import { TrackInfo } from "../types/types";
 import useSpotify from "./useSpotify";
 
-const useSongInfo = (): TrackInfo => {
+const useSongInfo = (): SpotifyApi.TrackObjectFull => {
   const spotifyApi = useSpotify();
 
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState<string>(currentTrackIdState);
-  const [songInfo, setSongInfo] = useState<TrackInfo>(null);
+  const [songInfo, setSongInfo] = useState<SpotifyApi.TrackObjectFull>(null);
 
   useEffect(() => {
     const fetchSongInfo = async () => {

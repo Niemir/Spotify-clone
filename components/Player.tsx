@@ -17,7 +17,6 @@ import { playlistIdState, playlistState } from "../atoms/playlistAtom";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 import useSongInfo from "../hooks/useSongInfo";
 import useSpotify from "../hooks/useSpotify";
-import { Playlist } from "../types/types";
 import Song from "./Song";
 import { debounce } from "lodash";
 import { toastState } from "../atoms/toastAtom";
