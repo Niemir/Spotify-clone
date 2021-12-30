@@ -20,8 +20,8 @@ const Album: FC<AlbumProps> = ({ album }) => {
       <div>
         <p className=" text-white truncate lg:text-xl">{album.name}</p>
         <p className="mt-1">
-          {album.artists.map((artist) => (
-            <span>{artist.name} </span>
+          {album.artists.map((artist, id) => (
+            <span key={artist.id + id}>{artist.name} </span>
           ))}
         </p>
       </div>
