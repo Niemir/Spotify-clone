@@ -50,7 +50,7 @@ const Home = () => {
       >
         <img
           className="h-24 md:h-44 w-24 md:w-44 shadow-2xl bg-black"
-          src={playlist?.images[0].url}
+          src={playlist?.images[0]?.url}
           alt=""
         />
         <div>

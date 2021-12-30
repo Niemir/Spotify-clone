@@ -121,11 +121,13 @@ export const Player = () => {
   return (
     <div className="h-32 md:h-24 bg-gradient-to-b from-black to-gray-900 text-white grid grid-cols-2 md:grid-cols-3 text-xs md:text-base px-2 md:px-8">
       <div className="flex items-center space-x-4 ">
-        <img
-          className="md:inline h-10 w-10"
-          src={songInfo?.album.images?.[0].url}
-          alt=""
-        />
+        {songInfo && (
+          <img
+            className="md:inline h-10 w-10"
+            src={songInfo?.album.images?.[0].url}
+            alt=""
+          />
+        )}
         <div>
           <h3>{songInfo?.name}</h3>
           <p>{songInfo?.artists?.[0].name}</p>
