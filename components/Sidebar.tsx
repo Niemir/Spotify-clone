@@ -18,9 +18,11 @@ import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { playlistIdState } from "../atoms/playlistAtom";
 import MenuLink from "./MenuLink";
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const spotifyApi = useSpotify();
+  const router = useRouter();
   const [mobileMenu, setMobileMenu] = useState(false);
   const { data: session } = useSession();
   const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectFull[]>(
@@ -35,7 +37,6 @@ const Sidebar = () => {
       });
     }
   }, [session, spotifyApi]);
-  console.log(playlistId);
 
   const handleMenu = () => {
     setMobileMenu((prev) => !prev);
@@ -55,7 +56,7 @@ const Sidebar = () => {
       <div
         className={`${
           mobileMenu ? "translate-x-0" : "translate-x-[-100%]"
-        } text-gray-500 pt-20 p-7 text-md w-[80%] absolute z-10 bg-black  border-r border-gray-900 transition-transform overflow-y-scroll h-screen scrollbar-hide    md:inline-flex pb-36 md:z-0 md:translate-x-0  md:p-5 md:static md:w-[12rem] md:text-xs lg:text-sm lg:w-[15rem]`}
+        } text-gray-500 pt-20 p-7 text-md w-[80%] absolute z-10 bg-black  border-r border-gray-900 transition-transform overflow-y-scroll h-screen scrollbar-hide  md:inline-flex pb-36 md:z-0 md:translate-x-0  md:p-5 md:static md:w-[12rem] md:text-xs lg:text-sm lg:w-[15rem]`}
       >
         <div className="space-y-3 ">
           <MenuLink path="/" icon={HomeIcon} label="Home" />
@@ -70,7 +71,12 @@ const Sidebar = () => {
           {playlists.map(({ name, id }) => (
             <p
               key={id}
-              onClick={() => setPlaylistId(id)}
+              onClick={() => {
+                if (router.pathname !== "/") {
+                  router.push("/");
+                }
+                setPlaylistId(id);
+              }}
               className="cursor-pointer hover:text-white p-1"
             >
               {name}

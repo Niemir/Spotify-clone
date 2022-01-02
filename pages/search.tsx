@@ -71,9 +71,11 @@ const Search = () => {
         {loading ? (
           <Loader />
         ) : (
-          songs.map((track, id) => (
-            <Song key={track.id + id} order={id} track={track} />
-          ))
+          <div className="grid">
+            {songs.map((track, id) => (
+              <Song key={track.id + id} order={id} track={track} />
+            ))}
+          </div>
         )}
       </div>
       <div className="relative mb-8">
