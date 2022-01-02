@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 import Song from "../components/Song";
 import Link from "next/link";
+import { toastState } from "../atoms/toastAtom";
+import { useRecoilState } from "recoil";
 
 const colors = [
   "from-indigo-500",
@@ -19,12 +21,12 @@ const colors = [
 ];
 
 const Album = () => {
-  const { data: session } = useSession();
   const router = useRouter();
   const spotifyApi = useSpotify();
   const [color, setColor] = useState("");
   const [albumId, setAlbumId] = useState("");
   const [album, setAlbum] = useState<null | SpotifyApi.AlbumObjectFull>(null);
+  const [error, setError] = useRecoilState<string>(toastState);
 
   useEffect(() => {
     if (router.query.id) {
@@ -43,7 +45,7 @@ const Album = () => {
         .then((data) => {
           setAlbum(data.body);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => setError("Something went wrong."));
     }
   }, [spotifyApi, albumId]);
 

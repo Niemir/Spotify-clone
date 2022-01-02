@@ -23,7 +23,6 @@ const Artist: FC<ArtistProps> = ({ artist }) => {
           <div className="layer ">
             <PlayIcon className="text-green-500 w-20 md:w-36" />
           </div>
-          {console.log(artist)}
           <div className="relative pt-[100%] rounded-full overflow-hidden shadow-2xl shadow-black mb-4 bg-gradient-to-b from-green-500 to-black">
             <img
               className=" absolute top-0 left-0 w-full h-full object-cover "

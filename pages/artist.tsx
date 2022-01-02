@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 import Song from "../components/Song";
 import Link from "next/link";
+import { toastState } from "../atoms/toastAtom";
+import { useRecoilState } from "recoil";
 
 const colors = [
   "from-indigo-500",
@@ -22,6 +24,7 @@ const Artist = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const spotifyApi = useSpotify();
+  const [error, setError] = useRecoilState<string>(toastState);
   const [color, setColor] = useState("");
   const [artistId, setArtistId] = useState("");
   const [artistPlaylist, setArtistPlaylist] = useState<
@@ -46,16 +49,15 @@ const Artist = () => {
         .then((data) => {
           setArtistInfo(data.body);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => setError("Something went wrong."));
 
       spotifyApi
         .getArtistTopTracks(artistId, "PL")
         .then((data) => setArtistPlaylist(data.body.tracks))
-        .catch((error) => console.log(error));
+        .catch((error) => setError("Something went wrong."));
     }
   }, [spotifyApi, artistId]);
 
-  console.log(artistId);
   return (
     <div className="flex-grow text-white h-screen overflow-y-scroll scrollbar-hide">
       <section

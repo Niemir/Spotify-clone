@@ -1,8 +1,10 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import { devicesState } from "../atoms/devicesAtom";
 import { toastState } from "../atoms/toastAtom";
+import useSpotify from "../hooks/useSpotify";
 
 import Player from "./Player";
 import Sidebar from "./Sidebar";
@@ -10,14 +12,27 @@ import UserBar from "./UserBar";
 
 const Layout = ({ children }) => {
   const [toast, setToast] = useRecoilState<string>(toastState);
+  const [devices, setDevices] = useRecoilState(devicesState);
   const router = useRouter();
   const { data } = useSession();
+  const spotifyApi = useSpotify();
 
+  const [refresh, setRefresh] = useState(false);
+  const refreshApp = () => {
+    setRefresh((prev) => !prev);
+  };
   useEffect(() => {
     if (!data) {
       router.push("/login");
     }
-  }, [data, router]);
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi
+        .getMyDevices()
+        .then((data) =>
+          setDevices(data.body.devices.some((device) => device.is_active))
+        );
+    }
+  }, [data, router, spotifyApi, refresh]);
 
   useEffect(() => {
     if (toast !== "") {
@@ -35,7 +50,7 @@ const Layout = ({ children }) => {
             {children}
           </main>
           <div className="fixed w-full bottom-0">
-            <Player />
+            <Player refresh={refreshApp} />
           </div>
         </>
       ) : (

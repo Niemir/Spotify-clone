@@ -45,7 +45,6 @@ const Search = () => {
         })
 
         .finally(() => setLoading(false));
-      console.log(value);
     }, 500),
     []
   );
