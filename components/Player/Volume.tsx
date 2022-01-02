@@ -15,7 +15,9 @@ const Volume = ({ refresh }) => {
   const deviceDetails = useRecoilValue<SpotifyApi.UserDevice>(deviceInfo);
 
   useEffect(() => {
-    setVolume(deviceDetails.volume_percent);
+    if (deviceDetails) {
+      setVolume(deviceDetails.volume_percent);
+    }
   }, [spotifyApi, deviceDetails]);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const Volume = ({ refresh }) => {
 
   const debouncedVolume = useCallback(
     debounce((volume) => {
-      if (isAnyDeviceActive) {
+      if (isAnyDeviceActive && deviceDetails.type !== "Smartphone") {
         spotifyApi
           .setVolume(volume)
           .catch((err) => setError("Something went wrong."));

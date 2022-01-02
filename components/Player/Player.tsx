@@ -17,7 +17,7 @@ export const Player = ({ refresh }) => {
           <Volume refresh={refresh} />
         </>
       ) : (
-        <div className="h-full flex items-center justify-center flex-col">
+        <div className="h-full flex items-center justify-center flex-col  col-start-1 col-end-3 md:col-start-2 md:col-end-3">
           <p>You need to open Spotify Client</p>
           <div>
             <RefreshIcon
