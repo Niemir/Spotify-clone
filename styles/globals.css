@@ -16,4 +16,7 @@
     .repeat-context{
         @apply after:block after:absolute after:bottom-[-10px] after:w-1 after:h-1 after:bg-green-500 after:rounded after:left-[50%]
     }
+    .layer{
+        @apply hidden group-hover:flex absolute w-full h-full bg-black opacity-90 top-0 left-0 z-50 flex items-center justify-center
+    }
 }
