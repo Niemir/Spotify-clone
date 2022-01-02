@@ -1,27 +1,52 @@
-# Next.js + Tailwind CSS Example
+# Spotify Clone
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+Educational project to learn more about Typescript and Next.js.
 
-## Preview
+Login in is handled by NextAuth.js and Spotify Auth Provider.
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+## Demo
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+https://spotify-clone-ebon.vercel.app/
 
-## Deploy your own
+## Spotify API
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+- [Spotify Dashboard, to get secrets for env file](https://developer.spotify.com/dashboard/login)
+- [Spotify API Docs](https://developer.spotify.com/documentation/web-api/)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Run Locally
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Clone the project
 
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+  git clone https://github.com/Niemir/Spotify-clone.git
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Go to the project directory
+
+```bash
+  cd Spotify-clone
+```
+
+Copy .env-example into .env.local
+
+```bash
+  cp .env-example .env.local
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Tech Stack
+
+**Client:** Next.js, Recoil, TailwindCSS
+
+**Auth:** NextAuth.js
