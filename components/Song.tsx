@@ -1,8 +1,10 @@
 import { FC } from "react";
 import useSpotify from "../hooks/useSpotify";
 import { msToMinuts } from "../helpers/getTime";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
+import { devicesState } from "../atoms/devicesAtom";
+import { toastState } from "../atoms/toastAtom";
 interface SongProps {
   order: number;
   track: SpotifyApi.TrackObjectFull;
@@ -12,15 +14,21 @@ const Song: FC<SongProps> = ({ order, track }) => {
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState<string>(currentTrackIdState);
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(isPlayingState);
+  const isAnyDeviceActive = useRecoilValue(devicesState);
+  const [error, setError] = useRecoilState<string>(toastState);
 
   const { id, name, album, artists, duration_ms, uri } = track;
 
   const playSong = () => {
-    setCurrentTrackId(id);
-    setIsPlaying(true);
-    spotifyApi.play({
-      uris: [uri],
-    });
+    if (isAnyDeviceActive) {
+      setCurrentTrackId(id);
+      setIsPlaying(true);
+      spotifyApi.play({
+        uris: [uri],
+      });
+    } else {
+      setError("You need to open any Spotify Client");
+    }
   };
 
   return (

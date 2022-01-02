@@ -2,17 +2,18 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { devicesState } from "../atoms/devicesAtom";
+import { devicesState, deviceInfo } from "../atoms/devicesAtom";
 import { toastState } from "../atoms/toastAtom";
 import useSpotify from "../hooks/useSpotify";
 
-import Player from "./Player";
+import Player from "./Player/Player";
 import Sidebar from "./Sidebar";
 import UserBar from "./UserBar";
 
 const Layout = ({ children }) => {
   const [toast, setToast] = useRecoilState<string>(toastState);
   const [devices, setDevices] = useRecoilState(devicesState);
+  const [deviceDetails, setDeviceDetails] = useRecoilState(deviceInfo);
   const router = useRouter();
   const { data } = useSession();
   const spotifyApi = useSpotify();
@@ -26,11 +27,12 @@ const Layout = ({ children }) => {
       router.push("/login");
     }
     if (spotifyApi.getAccessToken()) {
-      spotifyApi
-        .getMyDevices()
-        .then((data) =>
-          setDevices(data.body.devices.some((device) => device.is_active))
+      spotifyApi.getMyDevices().then((data) => {
+        setDeviceDetails(
+          data.body.devices.filter((device) => device.is_active)?.[0]
         );
+        setDevices(data.body.devices.some((device) => device.is_active));
+      });
     }
   }, [data, router, spotifyApi, refresh]);
 
