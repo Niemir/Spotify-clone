@@ -17,6 +17,7 @@ const Volume = ({ refresh }) => {
   useEffect(() => {
     setVolume(deviceDetails.volume_percent);
   }, [spotifyApi, deviceDetails]);
+
   useEffect(() => {
     if (volume > 0 && volume < 100) {
       debouncedVolume(volume);

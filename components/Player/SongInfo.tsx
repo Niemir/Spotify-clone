@@ -40,7 +40,6 @@ const SongInfo = () => {
   return (
     <div className="hidden md:flex items-center space-x-4 ">
       {songInfo && (
-        // eslint-disable-next-line @next/next/no-img-element
         <img
           className="md:inline h-10 w-10"
           src={songInfo?.album.images?.[0].url}
