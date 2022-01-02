@@ -32,14 +32,16 @@ const Song: FC<SongProps> = ({ order, track }) => {
     >
       <div className="flex items-center space-x-4">
         <p>{order + 1}</p>
-        <img className="h-10 w-10" src={album.images[2].url} alt="" />
+        {album && (
+          <img className="h-10 w-10" src={album.images[2].url} alt="" />
+        )}
         <div>
           <p className="w-36 lg:w-64 text-white truncate">{name}</p>
           <p className="w-40 ">{artists[0].name}</p>
         </div>
       </div>
       <div className="flex items-center  justify-between ml-auto md:ml-0">
-        <p className="w-40  hidden md:inline">{album.name}</p>
+        <p className="w-40  hidden md:inline">{album ? album.name : name}</p>
         <p>{msToMinuts(duration_ms)}</p>
       </div>
     </div>
